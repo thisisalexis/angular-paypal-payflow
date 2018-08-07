@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Payment Details</div>
+      <div class="panel-body">
+        <div class="alert alert-warning" role="alert" *ngIf="this.isShowErrorMessageInForm">
+          There were an error while trying to make your payment.
+        </div>
+        <form class="form" [formGroup]="this.creditCardFormGroup">
+          <div [ngClass]="{ 'form-group': true, 'has-error': ( this.creditCardFormGroup.get('creditCardHolderName').touched || this.creditCardFormGroup.get('creditCardHolderName').dirty ) && this.creditCardFormGroup.get('creditCardHolderName').invalid   }">
+            <label class="control-label" for="creditCardHolderName">Name on Card </label>
+            <input type="text" class="form-control" id="creditCardHolderName" formControlName="creditCardHolderName" placeholder="Card holder's name">
+            <small class="help-block" *ngIf="( this.creditCardFormGroup.get('creditCardHolderName').touched || this.creditCardFormGroup.get('creditCardHolderName').dirty ) && this.creditCardFormGroup.get('creditCardHolderName').invalid">Card holder's name is required.</small>
+          </div>
+          <div [ngClass]="{ 'form-group': true, 'has-error': ( this.creditCardFormGroup.get('creditCardNumber').touched || this.creditCardFormGroup.get('creditCardNumber').dirty ) && this.creditCardFormGroup.get('creditCardNumber').invalid   }">
+            <label class="control-label" for="creditCardNumber">Card Number </label>
+            <input type="text" class="form-control" id="creditCardNumber" placeholder="Card Number" formControlName="creditCardNumber">
+            <small class="help-block" *ngIf="( this.creditCardFormGroup.get('creditCardNumber').touched || this.creditCardFormGroup.get('creditCardNumber').dirty ) && this.creditCardFormGroup.get('creditCardNumber').invalid">Invalid credit card number.</small>
+          </div>
+          <div [ngClass]="{ 'form-group': true, 'has-error': ( this.creditCardFormGroup.get('securityNumber').touched || this.creditCardFormGroup.get('securityNumber').dirty ) && this.creditCardFormGroup.get('securityNumber').invalid   }">
+            <label class="control-label" for="securityCode">CVV</label>
+            <div class="row">
+              <div class="col-xs-12 col-sm-8">
+                <input type="text" class="form-control" id="securityCode" formControlName="securityNumber" placeholder="Security Code">
+              </div>
+            </div>
+            <small class="help-block" *ngIf="( this.creditCardFormGroup.get('securityNumber').touched || this.creditCardFormGroup.get('securityNumber').dirty ) && this.creditCardFormGroup.get('securityNumber').invalid">Invalid security code.</small>
+          </div>
+          <div formGroupName="expirationDate" [ngClass]="{ 'form-group': true, 'has-error': ( this.creditCardFormGroup.get('expirationDate').touched || this.creditCardFormGroup.get('expirationDate').dirty ) && this.creditCardFormGroup.get('expirationDate').invalid   }">
+            <label class="control-label" for="expirationMonth">Expiration Date </label>
+            <div class="row">
+              <div class="col-xs-6 col-sm-4">
+                <select class="form-control" id="expirationMonth" formControlName="expirationMonth">
+                  <option [ngValue]="null">Month</option>
+                  <option *ngFor=" let expirationMonth of this.arrayOfExpirationMonths " [value]="expirationMonth">{{ expirationMonth }}</option>
+                </select>
+              </div>
+              <div class="col-xs-6 col-sm-4">
+                <select class="form-control" id="expirationYear" formControlName="expirationYear">
+                  <option [ngValue]="null">Year</option>
+                  <option *ngFor=" let expirationYear of this.arrayOfExpirationYears " [value]="expirationYear">{{ expirationYear }}</option>
+                </select>
+              </div>
+            </div>
+            <small class="help-block" *ngIf="( this.creditCardFormGroup.get('expirationDate').touched || this.creditCardFormGroup.get('expirationDate').dirty ) && this.creditCardFormGroup.get('expirationDate').invalid">Invalid expiration date.</small>
+          </div>
+          <hr>
+          <button type="button"[ngClass]=" { 'btn': true, 'btn-success': true, 'btn-xl': true } " (click)="this.confirm()" [disabled]=" this.creditCardFormGroup.invalid ">Pay Now</button>
+          <a (click)="this.resetForm()" role="button">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
